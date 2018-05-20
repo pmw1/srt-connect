@@ -7,6 +7,7 @@
 import sys
 import random
 import os
+import time
 #### Import Custom Modules
 import messcolor
 
@@ -61,9 +62,13 @@ def validateArgs():
 	if (args.mode is None):
 		messcolor.printc('red', 'You must include a mode. (-m server) or (-m client)')
 		killrun = True
-	if (args.profile is None):
+
+
+	if (args.profile is None and args.direction is 'tx'):
 		messcolor.printc('red', 'You must include a profile. (-p 1080i_8mbps)')
 		killrun = True
+	
+
 	if (args.direction is None):
 		messcolor.printc('red', 'You must include a direction. (-d tx) or (-d rx)')
 		killrun = True	
@@ -434,7 +439,7 @@ def rx():
 	vlc_entrypoint.write(bytes("cvlc udp://@:4444 ", 'UTF-8'))
 	vlc_entrypoint.write(bytes("-I dummy ", 'UTF-8'))
 	vlc_entrypoint.write(bytes("--ignore-config ", 'UTF-8'))
-	vlc_entrypoint.write(bytes("--network-caching=\"250\" ", 'UTF-8'))
+	vlc_entrypoint.write(bytes("--network-caching=\"200\" ", 'UTF-8'))
 	vlc_entrypoint.write(bytes("--decklink-vout-video-connection sdi ", 'UTF-8'))
 	vlc_entrypoint.write(bytes("--decklink-mode Hi59 ", 'UTF-8'))
 	vlc_entrypoint.write(bytes("--decklink-aspect-ratio=16:9 ", 'UTF-8'))
@@ -477,7 +482,7 @@ def rx():
 	vlc_start_docker.write(bytes("--entrypoint=\"/home/hostfiles/vlc-entrypoint.sh\" ", 'UTF-8'))
 	##vlc_start_docker.write(bytes("--entrypoint=\"/bin/bash\" ", 'UTF-8'))
 	vlc_start_docker.write(bytes("pmw1/vlc \n", 'UTF-8'))
-	vlc_start_docker.write(bytes("sudo docker attach vlc-rx\n", 'UTF-8'))
+	##vlc_start_docker.write(bytes("sudo docker attach vlc-rx\n", 'UTF-8'))
 	vlc_start_docker.close()
 	os.chmod('hostfiles/start-vlc-docker.sh', stat.S_IXOTH)
 	messcolor.printc('blue', "SUCCESS: VLC Docker Launcher file created (hostfiles/start-vlc-docker.sh)")
@@ -514,9 +519,6 @@ def rx():
 ########################### END START RECEIVING #############################
 #############################################################################
 
-
-
-
 ############################### END BUILD RX ################################
 #############################################################################
 
@@ -543,6 +545,7 @@ if(args.direction=='tx'):
 ######## Build RX	
 if(args.direction=='rx'):
 	rx()
+
 
 
 
