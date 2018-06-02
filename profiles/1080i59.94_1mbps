@@ -18,10 +18,10 @@ vaspect-ratio:	16:9
 vintra-refresh:	1
 apid:			1001
 abitrate:		256
-aformat:		aac
-aaac-profile:	aac-lc
-aaac-encap:		latm
-pmt-pid:		256
+aformat:		mp2
+aaac-profile:
+aaac-encap:		
+pmt-pid:		128
 program-num:	1
 pcr-pid:		512
 pcr-period:		30
